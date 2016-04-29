@@ -1,5 +1,5 @@
 module.exports = [
-  '30px line random angle only draw if not intersecting',
+  '30px square random angle only draw if not intersecting',
   '4px circle',
   '20px line',
   '30px square',

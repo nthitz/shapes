@@ -93,31 +93,68 @@ function reset() {
       if (! program.condition) return true
       if (typeof program.condition.intersect === 'undefined') return true
       let shape = null;
+
       if (program.shape === 'line') {
         shape = [
           [x - Math.cos(angle) * halfSize, y - Math.sin(angle) * halfSize],
           [x + Math.cos(angle) * halfSize, y + Math.sin(angle) * halfSize]
         ]
+      } else if (program.shape === 'square') {
+        // shape = [
+        //   [x - dx, y - dy],
+        //   [x - dx, y + dy],
+        //   [x + dx, y + dy],
+        //   [x + dx, y - dy]
+        // ]
+        let xcos = halfSize * Math.cos(angle)
+        let ycos = halfSize * Math.cos(angle)
+        let xsin = halfSize * Math.sin(angle)
+        let ysin = halfSize * Math.sin(angle)
+
+        shape = [
+          {x: x + halfSize, y: y + halfSize},
+          {x: x + halfSize, y: y - halfSize},
+          {x: x - halfSize, y: y - halfSize},
+          {x: x - halfSize, y: y + halfSize}
+          // {x: x - dx, y: y - dy},
+          // {x: x - dx, y: y + dy},
+          // {x: x + dx, y: y + dy},
+          // {x: x + dx, y: y - dy}
+        ].map((point) => {
+          let tX = point.x - x;
+          let tY = point.y - y;
+          return {
+            x: x + tX * Math.cos(angle) - tY * Math.sin(angle),
+            y: y + tX * Math.sin(angle) - tY * Math.cos(angle)
+          }
+        })
       }
 
       if (shapes.length === 0) return addShapeAndReturn()
+      let testFunction = () => {
+        warn('intersect not implemented for ' + program.shape)
+        return Math.random() > 0.5
+      }
 
       if (program.shape === 'line') {
-        let hitsNone = true
-        for (let i = 0; i < shapes.length; i++) {
-          let testShape = shapes[i]
-          if (lineSegmentsIntersect(shape, testShape)) {
-            hitsNone = false
-            if (program.condition.intersect) {
-              return addShapeAndReturn()
-            }
+        testFunction = lineSegmentsIntersect
+      }
+
+
+      let hitsNone = true
+      for (let i = 0; i < shapes.length; i++) {
+        let testShape = shapes[i]
+        if (testFunction(shape, testShape)) {
+          hitsNone = false
+          if (program.condition.intersect) {
+            return addShapeAndReturn()
           }
         }
-        if (! program.condition.intersect && hitsNone) {
-          return addShapeAndReturn()
-        }
-        return false
       }
+      if (! program.condition.intersect && hitsNone) {
+        return addShapeAndReturn()
+      }
+      return false
 
       function addShapeAndReturn() {
         shapes.push(shape)
@@ -128,3 +165,13 @@ function reset() {
   }
 }
 
+let warnings = []
+function warn(msg) {
+  if (warnings.indexOf(msg) !== -1) return
+  warnings.push(msg)
+  console.error(msg)
+}
+
+function polygonsIntersect(poly1, poly2) {
+  return polygonsIntersection(poly1, poly2).length !== 0
+}

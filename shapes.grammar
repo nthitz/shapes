@@ -8,10 +8,11 @@
   let _ = require('lodash')
 }
 Program "program"
-  = object:Object _ angle:Angle? {
+  = _ object:Object _ angle:Angle? _ condition:Condition? _ {
     // console.log(object)
     // console.log(angle)
     object.angle = angle
+    object.condition = condition
     return object
   }
 
@@ -22,10 +23,52 @@ Expression "exp"
 // / Condition
 
 Angle "angle"
-  = random:"random"? _ "angle" {
-    return { random: random !== null }
+  = random:"random"? _ "angle" _ modifier:Modifier? {
+    // console.log(modifier)
+    return {
+      random: random !== null,
+      influence: modifier
+    }
   }
   / _ { return null }
+
+Modifier "modifier"
+ = "influenced by" _ influence:Influence {
+  return influence
+ }
+
+Influence "influence"
+ = "flow" _ "field" { return 'flowField' }
+ / "orientation to center" { return 'centerOrientation' }
+
+Condition "condition"
+  = "only draw if intersecting last" _ last:Integer _ "or first" {
+    return {
+      intersect: true,
+      last: last,
+      first: true,
+    }
+  }
+  / "only draw if not intersecting last" _ last:Integer _ "or first"? {
+    return {
+      intersect: false,
+      last: last,
+      first: true,
+    }
+  }
+  / "only draw if intersecting" {
+    return {
+      intersect: true,
+      first: false,
+    }
+  }
+  / "only draw if not intersecting" _ "or first"? {
+    return {
+      intersect: false,
+      first: true,
+    }
+  }
+
 Object "object"
   = size:Size _ shape:Shape {
     return {
@@ -33,6 +76,7 @@ Object "object"
       shape: shape,
     }
   }
+
 
 Shape "shape"
   = "line" { return text() }

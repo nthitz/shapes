@@ -1,0 +1,49 @@
+/*
+ * Simple Arithmetics Grammar
+ * ==========================
+ *
+ * Accepts expressions like "2 * (3 + 4)" and computes their value.
+ */
+{
+  let _ = require('lodash')
+}
+Program "program"
+  = object:Object _ angle:Angle? {
+    // console.log(object)
+    // console.log(angle)
+    object.angle = angle
+    return object
+  }
+
+Expression "exp"
+ = Object
+// / Modifier
+// / Influence
+// / Condition
+
+Angle "angle"
+  = random:"random"? _ "angle" {
+    return { random: random !== null }
+  }
+  / _ { return null }
+Object "object"
+  = size:Size _ shape:Shape {
+    return {
+      size: size,
+      shape: shape,
+    }
+  }
+
+Shape "shape"
+  = "line" { return text() }
+  / "square"
+  / "circle"
+Size "size"
+  = Integer "px" { return text() }
+
+Integer "integer"
+  = [0-9]+ { return parseInt(text(), 10); }
+
+_ "whitespace"
+  = [ \t\n\r]*
+

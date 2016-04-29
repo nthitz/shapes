@@ -1,5 +1,5 @@
 module.exports = [
-  '30px square random angle only draw if not intersecting',
+  '30px square random angle only draw if intersecting',
   '4px circle',
   '20px line',
   '30px square',
@@ -9,7 +9,7 @@ module.exports = [
   '20px line angle influenced by orientation to center ',
   '20px line random angle influenced by flow field',
   '20px line only draw if not intersecting or first',
-  '20px line only draw if not intersecting',
+  '40px line random angle only draw if intersecting',
   '20px line only draw if intersecting last 10 or first',
   '20px line only draw if not intersecting last 50 or first',
   '20px line only draw if not intersecting last 50',

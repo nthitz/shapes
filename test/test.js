@@ -26,30 +26,30 @@ describe('grammar rules', function() {
   describe('should recognize objects', function() {
     it ('lines', function() {
       let o = p('20px line')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
     })
     it ('squares', function() {
       let o = p('30px square')
-      assert.propertyVal(o, 'size', '30px')
+      assert.propertyVal(o, 'size', 30)
       assert.propertyVal(o, 'shape', 'square')
     })
     it ('circles', function() {
       let o = p('4px circle')
-      assert.propertyVal(o, 'size', '4px')
+      assert.propertyVal(o, 'size', 4)
       assert.propertyVal(o, 'shape', 'circle')
     })
   })
   describe('should recognize angles', function() {
     it ('angle', function() {
       let o = p('20px line angle')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'angle.random', false)
     })
     it ('random angle', function() {
       let o = p('20px line random angle')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'angle.random', true)
     })
@@ -58,14 +58,14 @@ describe('grammar rules', function() {
   describe('should recognize modifiers', function() {
     it ('angle', function() {
       let o = p('20px line angle influenced by orientation to center ')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'angle.random', false)
       assert.deepPropertyVal(o, 'angle.influence', 'centerOrientation')
     })
     it ('random angle', function() {
       let o = p('20px line random angle influenced by flow field')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'angle.influence', 'flowField')
     })
@@ -75,27 +75,27 @@ describe('grammar rules', function() {
   describe('should recognize conditions', function() {
     it ('intersecting', function() {
       let o = p('20px line only draw if intersecting')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'condition.intersect', true)
     })
     it ('not intersecting', function() {
       let o = p('20px line only draw if not intersecting or first')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'condition.intersect', false)
       assert.deepPropertyVal(o, 'condition.first', true)
     })
     it ('not intersecting alternate', function() {
       let o = p('20px line only draw if not intersecting')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'condition.intersect', false)
       assert.deepPropertyVal(o, 'condition.first', true)
     })
     it ('intersecting last 10', function() {
       let o = p('20px line only draw if intersecting last 10 or first')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'condition.intersect', true)
       assert.deepPropertyVal(o, 'condition.first', true)
@@ -103,7 +103,7 @@ describe('grammar rules', function() {
     })
     it ('not intersecting last 50', function() {
       let o = p('20px line only draw if not intersecting last 50 or first')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'condition.intersect', false)
       assert.deepPropertyVal(o, 'condition.first', true)
@@ -111,7 +111,7 @@ describe('grammar rules', function() {
     })
     it ('not intersecting last 50 alternate', function() {
       let o = p('20px line only draw if not intersecting last 50')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'condition.intersect', false)
       assert.deepPropertyVal(o, 'condition.first', true)
@@ -122,7 +122,7 @@ describe('grammar rules', function() {
   describe('complex', function() {
     it ('complex1', function() {
       let o = p('20px line random angle only draw if not intersecting last 50')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'angle.random', true)
       assert.deepPropertyVal(o, 'condition.intersect', false)
@@ -131,7 +131,7 @@ describe('grammar rules', function() {
     })
     it ('complex2', function() {
       let o = p('20px line random angle influenced by flow field only draw if not intersecting last 50')
-      assert.propertyVal(o, 'size', '20px')
+      assert.propertyVal(o, 'size', 20)
       assert.propertyVal(o, 'shape', 'line')
       assert.deepPropertyVal(o, 'angle.random', true)
       assert.deepPropertyVal(o, 'angle.influence', 'flowField')

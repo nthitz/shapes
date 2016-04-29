@@ -83,7 +83,7 @@ Shape "shape"
   / "square"
   / "circle"
 Size "size"
-  = Integer "px" { return text() }
+  = size:Integer "px" { return size }
 
 Integer "integer"
   = [0-9]+ { return parseInt(text(), 10); }

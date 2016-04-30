@@ -10,6 +10,7 @@ let dim = 600
 let rafId = null
 
 let input = document.getElementById('input')
+let exampleDropdown = document.getElementById('examples')
 let output = document.getElementById('output')
 let ctx = output.getContext('2d')
 
@@ -18,13 +19,16 @@ let color = 'white'
 
 init()
 function init() {
-  input.onchange = reset
+  input.onkeydown = _.debounce(reset, 200)
+  exampleDropdown.onchange = setExample
 
   output.width = dim
   output.height = dim
 
-
   appendOptions()
+
+  input.value = examples[0]
+  input.focus()
   reset()
 }
 
@@ -33,8 +37,14 @@ function appendOptions() {
     let option = document.createElement('option')
     option.value = example
     option.text = example
-    input.appendChild(option)
+    exampleDropdown.appendChild(option)
   })
+}
+
+function setExample() {
+  input.value = exampleDropdown.value
+  input.focus()
+  reset()
 }
 
 function reset() {

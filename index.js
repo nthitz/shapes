@@ -49,6 +49,17 @@ function reset() {
 
   let halfSize = program.size / 2
   let twoPi = Math.PI * 2
+
+  program.constants = {}
+  if (program && program.angle &&
+    program.angle.influence &&
+    program.angle.influence === 'flowField'
+  ) {
+    program.constants.flowField = {
+      x: Math.random() * 0.01 + 0.001,
+      y: Math.random() * 0.01 + 0.001
+    }
+  }
   function draw() {
     rafId = requestAnimationFrame(draw)
     let x = Math.random() * dim
@@ -70,12 +81,21 @@ function reset() {
         if (program.angle.influence) {
           if (program.angle.influence === 'centerOrientation') {
             angle = Math.atan2(y - dim / 2, x - dim / 2)
-            if (program.angle.random) {
-              angle += (Math.random() - 0.5) * 0.5
-            }
+            addRandomJitter()
+          } else if (program.angle.influence === 'flowField') {
+            angle = Math.cos(x * program.constants.flowField.x)
+              + Math.cos(y * program.constants.flowField.y)
+            addRandomJitter()
+
           }
         } else if (program.angle.random) {
           angle = Math.random() * twoPi
+
+        }
+      }
+      function addRandomJitter() {
+        if (program.angle.random) {
+          angle += (Math.random() - 0.5) * 0.5
         }
       }
     }

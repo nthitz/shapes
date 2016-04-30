@@ -62,28 +62,19 @@ function reset() {
     if (!pass) {
       return
     }
-    ctx.fillStyle = color
-    ctx.strokeStyle = color
 
-    ctx.save()
-    ctx.beginPath()
-
-    let newShape = shapes[shapes.length - 1]
-    if (program.shape.type === 'polygon') {
-      drawPolygon(newShape)
-    } else if (program.shape.type === 'line') {
-      ctx.moveTo(newShape[0][0], newShape[0][1])
-      ctx.lineTo(newShape[1][0], newShape[1][1])
-      ctx.stroke()
-    } else if (program.shape.type === 'circle') {
-      ctx.arc(x, y, halfSize, 0, twoPi, true)
-      ctx.fill()
-    }
-    ctx.restore()
+    drawShape()
 
     function assignAngle() {
       if (program.angle) {
-        if (program.angle.random) {
+        if (program.angle.influence) {
+          if (program.angle.influence === 'centerOrientation') {
+            angle = Math.atan2(y - dim / 2, x - dim / 2)
+            if (program.angle.random) {
+              angle += (Math.random() - 0.5) * 0.5
+            }
+          }
+        } else if (program.angle.random) {
           angle = Math.random() * twoPi
         }
       }
@@ -147,6 +138,27 @@ function reset() {
         // console.log(shape)
         return true
       }
+    }
+
+    function drawShape() {
+      ctx.fillStyle = color
+      ctx.strokeStyle = color
+
+      ctx.save()
+      ctx.beginPath()
+
+      let newShape = shapes[shapes.length - 1]
+      if (program.shape.type === 'polygon') {
+        drawPolygon(newShape)
+      } else if (program.shape.type === 'line') {
+        ctx.moveTo(newShape[0][0], newShape[0][1])
+        ctx.lineTo(newShape[1][0], newShape[1][1])
+        ctx.stroke()
+      } else if (program.shape.type === 'circle') {
+        ctx.arc(x, y, halfSize, 0, twoPi, true)
+        ctx.fill()
+      }
+      ctx.restore()
     }
   }
 }

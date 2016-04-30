@@ -1,5 +1,5 @@
 module.exports = [
-  '20px triangle random angle influenced by flow field',
+  '20px triangle angle influenced by flow field not intersecting',
   '20px line random angle influenced by flow field',
   '40px line random angle influenced by orientation to center only draw if not intersecting',
   '30px square random angle only draw if intersecting',

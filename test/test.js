@@ -177,6 +177,25 @@ describe('grammar rules', function() {
       assert.deepPropertyVal(o, 'condition.intersect', false)
       assert.deepPropertyVal(o, 'condition.last', 50)
     })
+    it ('not intersecting short', function() {
+      let o = p('20px line not intersecting')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'condition.intersect', false)
+    })
+    it ('intersecting short', function() {
+      let o = p('20px line intersecting')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'condition.intersect', true)
+    })
+    it ('intersecting last short', function() {
+      let o = p('20px line intersecting last 40')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'condition.intersect', true)
+      assert.deepPropertyVal(o, 'condition.last', 40)
+    })
   })
 
   describe('complex', function() {

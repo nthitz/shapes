@@ -42,24 +42,24 @@ Influence "influence"
  / "orientation to center" { return 'centerOrientation' }
 
 Condition "condition"
-  = "only draw if intersecting last" _ last:Integer _ "or first"? {
+  = "only draw if"? _ "intersecting last" _ last:Integer _ "or first"? {
     return {
       intersect: true,
       last: last,
     }
   }
-  / "only draw if not intersecting last" _ last:Integer _ "or first"? {
+  / "only draw if"? _ "not intersecting last" _ last:Integer _ "or first"? {
     return {
       intersect: false,
       last: last,
     }
   }
-  / "only draw if intersecting" _ "or first"?{
+  / "only draw if"? _ "intersecting" _ "or first"?{
     return {
       intersect: true,
     }
   }
-  / "only draw if not intersecting" _ "or first"? {
+  / "only draw if"? _ "not intersecting" _ "or first"? {
     return {
       intersect: false,
     }

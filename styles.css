@@ -32,6 +32,11 @@ input {
   cursor: pointer;
   outline: none;
   height: 40px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+input:hover {
+  opacity: 1;
 }
 
 select {
@@ -40,9 +45,16 @@ select {
   color: #3c3;
   border: none;
   cursor: pointer;
+  max-width: 440px;
 }
 #examples {
-  float:;
+  margin: 1em 0;
+  float: right;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+#examples:hover {
+  opacity: 1;
 }
 
 #output {

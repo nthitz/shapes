@@ -84,7 +84,7 @@ Polygon "polygon"
   / "hexagon"i { return 6 }
   / "septagon"i { return 7 }
   / "octagon"i { return 8 }
-  / n:Integer _ "-"? "gon" { return n }
+  / n:Integer _ "-"? "gon"i { return n }
 
 
 Size "size"

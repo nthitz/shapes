@@ -196,6 +196,27 @@ describe('grammar rules', function() {
       assert.deepPropertyVal(o, 'condition.intersect', true)
       assert.deepPropertyVal(o, 'condition.last', 40)
     })
+
+    it ('touching', function() {
+      let o = p('20px line only draw if touching')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'condition.intersect', true)
+    })
+
+    it ('not touching', function() {
+      let o = p('20px line only draw if not touching')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'condition.intersect', false)
+    })
+
+    it ('touching short', function() {
+      let o = p('20px line touching')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'condition.intersect', true)
+    })
   })
 
   describe('complex', function() {
@@ -226,6 +247,15 @@ describe('grammar rules', function() {
     })
     it ('complex2 reordered', function() {
       let o = p('random angle influenced by flow field line only draw if not intersecting last 50 20px')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'angle.random', true)
+      assert.deepPropertyVal(o, 'angle.influence', 'flowField')
+      assert.deepPropertyVal(o, 'condition.intersect', false)
+      assert.deepPropertyVal(o, 'condition.last', 50)
+    })
+    it ('uppercase', function() {
+      let o = p('RANDOM ANGLE INFLUENCED BY FLOW FIELD LINE ONLY DRAW IF NOT INTERSECTING LAST 50 20PX')
       assert.propertyVal(o, 'size', 20)
       assert.deepPropertyVal(o, 'shape.type', 'line')
       assert.deepPropertyVal(o, 'angle.random', true)

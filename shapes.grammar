@@ -20,7 +20,7 @@ Expression "exp"
  / _ c: Condition _ { return {condition: c} }
 
 Angle "angle"
-  = random:"random"? _ "angle" _ modifier:Modifier? {
+  = random:"random"i? _ "angle"i _ modifier:Modifier? {
     // console.log(modifier)
     return {
       random: random !== null,
@@ -29,37 +29,39 @@ Angle "angle"
   }
 
 Modifier "modifier"
- = "influenced by" _ influence:Influence {
+ = "influenced by"i _ influence:Influence {
   return influence
  }
 
 Influence "influence"
- = "flow" _ "field" { return 'flowField' }
- / "orientation to center" { return 'centerOrientation' }
+ = "flow"i _ "field"i { return 'flowField' }
+ / "orientation to center"i { return 'centerOrientation' }
 
 Condition "condition"
-  = "only draw if"? _ "intersecting last" _ last:Integer _ "or first"? {
+  = OnlyDrawIf? _ Intersecting _ Last _ last:Integer _ OrFirst? {
     return {
       intersect: true,
       last: last,
     }
   }
-  / "only draw if"? _ "not intersecting last" _ last:Integer _ "or first"? {
+  / OnlyDrawIf? _ Not _ Intersecting _ Last _ last:Integer _ OrFirst? {
     return {
       intersect: false,
       last: last,
     }
   }
-  / "only draw if"? _ "intersecting" _ "or first"?{
+  / OnlyDrawIf? _ Intersecting _ OrFirst?{
     return {
       intersect: true,
     }
   }
-  / "only draw if"? _ "not intersecting" _ "or first"? {
+  / OnlyDrawIf? _ Not _ Intersecting _ OrFirst? {
     return {
       intersect: false,
     }
   }
+
+
 
 Object "object"
   = size:Size _ shape:Shape {
@@ -71,22 +73,39 @@ Object "object"
 
 
 Shape "shape"
-  = "line" { return { type: text() } }
-  / "circle" { return { type: text() }}
+  = "line"i { return { type: text().toLowerCase() } }
+  / "circle"i { return { type: text().toLowerCase() }}
   / n:Polygon { return { type: 'polygon', n: n }}
 
 Polygon "polygon"
-  = "triangle" { return 3}
-  / "square" { return 4 }
-  / "pentagon" { return 5 }
-  / "hexagon" { return 6 }
-  / "septagon" { return 7 }
-  / "octagon" { return 8 }
+  = "triangle"i { return 3}
+  / "square"i { return 4 }
+  / "pentagon"i { return 5 }
+  / "hexagon"i { return 6 }
+  / "septagon"i { return 7 }
+  / "octagon"i { return 8 }
   / n:Integer _ "-"? "gon" { return n }
 
 
 Size "size"
-  = size:Integer "px" { return { size: size } }
+  = size:Integer "px"i { return { size: size } }
+
+Intersecting "intersecting"
+  = "intersecting"i
+  / "touching"i
+
+OnlyDrawIf "only draw if"
+  = "only"i _ "draw"i _ "if"i
+
+OrFirst "or first"
+  = "or first"i
+
+Not "not"
+  = "not"i
+  / "!"
+
+Last "last"
+  = "last"i
 
 Integer "integer"
   = [0-9]+ { return parseInt(text(), 10); }

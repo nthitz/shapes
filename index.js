@@ -11,7 +11,7 @@ let dim = 600
 let rafId = null
 
 let input = document.getElementById('code')
-let exampleDropdown = document.getElementById('examples')
+let exampleDropdown = document.getElementById('exampleSelect')
 let resetButton = document.getElementById('reset')
 let output = document.getElementById('canvas')
 let errorConsole = document.getElementById('errors')

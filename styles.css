@@ -13,6 +13,7 @@ textarea {
   width: 89%;
   border: 0;
   outline: none;
+  height: 40px;
 }
 
 input {
@@ -25,6 +26,7 @@ input {
   font-size: 16px;
   cursor: pointer;
   outline: none;
+  height: 40px;
 }
 
 select {
@@ -33,6 +35,9 @@ select {
   color: #3c3;
   border: none;
   cursor: pointer;
+}
+#examples {
+  float: right;
 }
 
 #output {

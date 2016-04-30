@@ -6,8 +6,8 @@
 }
 
 Program "program"
-  = e1:Expression _ e2:Expression? _ e3:Expression? _ e4:Expression? {
-    let o = assign({}, e1, e2, e3, e4)
+  = e1: Expression _ e:Expression* {
+    let o = assign(e1, ...e)
     // console.log(o)
     return o
 

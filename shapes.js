@@ -37,8 +37,8 @@ module.exports = (function() {
         peg$startRuleFunction  = peg$parseProgram,
 
         peg$c0 = { type: "other", description: "program" },
-        peg$c1 = function(e1, e2, e3, e4) {
-            let o = assign({}, e1, e2, e3, e4)
+        peg$c1 = function(e1, e) {
+            let o = assign(e1, ...e)
             // console.log(o)
             return o
 
@@ -358,7 +358,7 @@ module.exports = (function() {
     }
 
     function peg$parseProgram() {
-      var s0, s1, s2, s3, s4, s5, s6, s7;
+      var s0, s1, s2, s3, s4;
 
       peg$silentFails++;
       s0 = peg$currPos;
@@ -366,44 +366,16 @@ module.exports = (function() {
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
         if (s2 !== peg$FAILED) {
-          s3 = peg$parseExpression();
-          if (s3 === peg$FAILED) {
-            s3 = null;
+          s3 = [];
+          s4 = peg$parseExpression();
+          while (s4 !== peg$FAILED) {
+            s3.push(s4);
+            s4 = peg$parseExpression();
           }
           if (s3 !== peg$FAILED) {
-            s4 = peg$parse_();
-            if (s4 !== peg$FAILED) {
-              s5 = peg$parseExpression();
-              if (s5 === peg$FAILED) {
-                s5 = null;
-              }
-              if (s5 !== peg$FAILED) {
-                s6 = peg$parse_();
-                if (s6 !== peg$FAILED) {
-                  s7 = peg$parseExpression();
-                  if (s7 === peg$FAILED) {
-                    s7 = null;
-                  }
-                  if (s7 !== peg$FAILED) {
-                    peg$savedPos = s0;
-                    s1 = peg$c1(s1, s3, s5, s7);
-                    s0 = s1;
-                  } else {
-                    peg$currPos = s0;
-                    s0 = peg$FAILED;
-                  }
-                } else {
-                  peg$currPos = s0;
-                  s0 = peg$FAILED;
-                }
-              } else {
-                peg$currPos = s0;
-                s0 = peg$FAILED;
-              }
-            } else {
-              peg$currPos = s0;
-              s0 = peg$FAILED;
-            }
+            peg$savedPos = s0;
+            s1 = peg$c1(s1, s3);
+            s0 = s1;
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;

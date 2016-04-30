@@ -1213,10 +1213,6 @@ module.exports = (function() {
       return s0;
     }
 
-
-      let _ = require('lodash')
-
-
     peg$result = peg$startRuleFunction();
 
     if (peg$result !== peg$FAILED && peg$currPos === input.length) {

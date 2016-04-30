@@ -4,9 +4,7 @@
  *
  * Accepts expressions like "2 * (3 + 4)" and computes their value.
  */
-{
-  let _ = require('lodash')
-}
+
 Program "program"
   = _ object:Object _ angle:Angle? _ condition:Condition? _ {
     // console.log(object)

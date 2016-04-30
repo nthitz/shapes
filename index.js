@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import lineSegmentsIntersect from 'line-segments-intersect'
 import polygonsIntersection from 'polygons-intersect'
 import deepEqual from 'deep-equal'
@@ -27,7 +27,7 @@ let color = 'white'
 
 init()
 function init() {
-  input.onkeydown = _.debounce(reset, 200)
+  input.onkeydown = debounce(reset, 200)
   resetButton.onclick = forceReset
   exampleDropdown.onchange = setExample
 

@@ -216,6 +216,23 @@ describe('grammar rules', function() {
       assert.deepPropertyVal(o, 'condition.intersect', false)
       assert.deepPropertyVal(o, 'condition.last', 50)
     })
+    it ('complex1 reordered', function() {
+      let o = p('only draw if not intersecting last 50 line 20px random angle ')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'angle.random', true)
+      assert.deepPropertyVal(o, 'condition.intersect', false)
+      assert.deepPropertyVal(o, 'condition.last', 50)
+    })
+    it ('complex2 reordered', function() {
+      let o = p('random angle influenced by flow field line only draw if not intersecting last 50 20px')
+      assert.propertyVal(o, 'size', 20)
+      assert.deepPropertyVal(o, 'shape.type', 'line')
+      assert.deepPropertyVal(o, 'angle.random', true)
+      assert.deepPropertyVal(o, 'angle.influence', 'flowField')
+      assert.deepPropertyVal(o, 'condition.intersect', false)
+      assert.deepPropertyVal(o, 'condition.last', 50)
+    })
   })
 
 })

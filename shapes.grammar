@@ -1,24 +1,23 @@
 /*
- * Simple Arithmetics Grammar
- * ==========================
- *
- * Accepts expressions like "2 * (3 + 4)" and computes their value.
+ * Simple Shape Drawing Grammar
  */
+{
+  let assign  = require('lodash/assign')
+}
 
 Program "program"
-  = _ object:Object _ angle:Angle? _ condition:Condition? _ {
-    // console.log(object)
-    // console.log(angle)
-    object.angle = angle
-    object.condition = condition
-    return object
+  = e1:Expression _ e2:Expression? _ e3:Expression? _ e4:Expression? {
+    let o = assign({}, e1, e2, e3, e4)
+    // console.log(o)
+    return o
+
   }
 
 Expression "exp"
- = Object
-// / Modifier
-// / Influence
-// / Condition
+ = _ s: Shape _ { return { shape: s } }
+ / _ s: Size _ { return s }
+ / _ a: Angle _ { return {angle: a} }
+ / _ c: Condition _ { return {condition: c} }
 
 Angle "angle"
   = random:"random"? _ "angle" _ modifier:Modifier? {
@@ -28,7 +27,6 @@ Angle "angle"
       influence: modifier
     }
   }
-  / _ { return null }
 
 Modifier "modifier"
  = "influenced by" _ influence:Influence {
@@ -88,7 +86,7 @@ Polygon "polygon"
 
 
 Size "size"
-  = size:Integer "px" { return size }
+  = size:Integer "px" { return { size: size } }
 
 Integer "integer"
   = [0-9]+ { return parseInt(text(), 10); }

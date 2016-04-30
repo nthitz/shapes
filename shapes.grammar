@@ -75,9 +75,20 @@ Object "object"
 
 
 Shape "shape"
-  = "line" { return text() }
-  / "square"
-  / "circle"
+  = "line" { return { type: text() } }
+  / "circle" { return { type: text() }}
+  / n:Polygon { return { type: 'polygon', n: n }}
+
+Polygon "polygon"
+  = "triangle" { return 3}
+  / "square" { return 4 }
+  / "pentagon" { return 5 }
+  / "hexagon" { return 6 }
+  / "septagon" { return 7 }
+  / "octagon" { return 8 }
+  / n:Integer _ "-"? "gon" { return n }
+
+
 Size "size"
   = size:Integer "px" { return size }
 

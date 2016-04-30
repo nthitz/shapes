@@ -69,13 +69,13 @@ function reset() {
     ctx.beginPath()
 
     let newShape = shapes[shapes.length - 1]
-    if (program.shape === 'square') {
+    if (program.shape.type === 'polygon') {
       drawPolygon(newShape)
-    } else if (program.shape === 'line') {
+    } else if (program.shape.type === 'line') {
       ctx.moveTo(newShape[0][0], newShape[0][1])
       ctx.lineTo(newShape[1][0], newShape[1][1])
       ctx.stroke()
-    } else if (program.shape === 'circle') {
+    } else if (program.shape.type === 'circle') {
       ctx.arc(0, 0, program.size, 0, twoPi, true)
       ctx.fill()
     }
@@ -92,12 +92,12 @@ function reset() {
     function checkConditions() {
       let shape = null;
 
-      if (program.shape === 'line') {
+      if (program.shape.type === 'line') {
         shape = [
           [x - Math.cos(angle) * halfSize, y - Math.sin(angle) * halfSize],
           [x + Math.cos(angle) * halfSize, y + Math.sin(angle) * halfSize]
         ]
-      } else if (program.shape === 'square') {
+      } else if (program.shape.type === 'polygon') {
         shape = makePolygon(x, y, halfSize * Math.sqrt(2), angle, 4)
       }
 
@@ -107,13 +107,13 @@ function reset() {
       if (shapes.length === 0) return addShapeAndReturn()
 
       let testFunction = () => {
-        warn('intersect not implemented for ' + program.shape)
+        warn('intersect not implemented for ' + program.shape.type)
         return Math.random() > 0.5
       }
 
-      if (program.shape === 'line') {
+      if (program.shape.type === 'line') {
         testFunction = lineSegmentsIntersect
-      } else if (program.shape === 'square') {
+      } else if (program.shape.type === 'polygon') {
         testFunction = polygonsIntersect
       }
 

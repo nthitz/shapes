@@ -10,8 +10,20 @@ textarea {
   font-family: monospace;
   background: transparent;
   font-size: 16px;
-  width: 100%;
+  width: 89%;
   border: 0;
+  outline: none;
+}
+
+input {
+  width: 10%;
+  float: right;
+  border: 1px solid #3c3;
+  background: transparent;
+  color: #3c3;
+  font-family: monospace;
+  font-size: 16px;
+  cursor: pointer;
   outline: none;
 }
 
@@ -22,3 +34,17 @@ select {
   border: none;
   cursor: pointer;
 }
+
+#output {
+  position: relative;
+}
+#errors {
+  position: absolute;
+  color: red;
+  top: 0;
+  background: rgba(0,0,0,0.8);
+  width: 600;
+  font-size: 16px;
+  color:red;
+}
+

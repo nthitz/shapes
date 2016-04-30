@@ -10,18 +10,25 @@ import examples from './examples'
 let dim = 600
 let rafId = null
 
-let input = document.getElementById('input')
+let input = document.getElementById('code')
 let exampleDropdown = document.getElementById('examples')
-let output = document.getElementById('output')
+let resetButton = document.getElementById('reset')
+let output = document.getElementById('canvas')
+let errorConsole = document.getElementById('errors')
+
 let ctx = output.getContext('2d')
 
 let program = null
+let compileError = null
+
 let shapes = []
 let color = 'white'
+
 
 init()
 function init() {
   input.onkeydown = _.debounce(reset, 200)
+  resetButton.onclick = forceReset
   exampleDropdown.onchange = setExample
 
   output.width = dim
@@ -50,7 +57,14 @@ function setExample() {
 }
 
 function compile(code) {
-  let newProgram = shapesParser.parse(code)
+  let newProgram = null
+  updateErrorMessage(null)
+  try {
+    newProgram = shapesParser.parse(code)
+  } catch (exception) {
+    updateErrorMessage(exception)
+    return false
+  }
   if (deepEqual(newProgram, program)) {
     return false
   }
@@ -58,10 +72,30 @@ function compile(code) {
   return true
 }
 
+function updateErrorMessage(error) {
+  console.log(error)
+  if (error === null) {
+    errorConsole.textContent = ''
+    errorConsole.style.display = 'none'
+  } else {
+    let text = `line: ${error.location.start.line } offset ${error.location.start.offset}: ${error}`
+    errorConsole.textContent = text
+    errorConsole.style.display = 'block'
+  }
+}
+
+function forceReset() {
+  execute(true)
+}
+
 function reset() {
+  execute(false)
+}
+
+function execute(force) {
   let code = input.value
   let updated = compile(code)
-  if (!updated) {
+  if (!updated && !force) {
     return
   }
 

@@ -5,6 +5,11 @@ body, html {
   color: #3c3;
 }
 
+#wrapper {
+  width: 600px;
+  margin: 0 auto;
+}
+
 textarea {
   color: #3c3;
   font-family: monospace;
@@ -37,10 +42,11 @@ select {
   cursor: pointer;
 }
 #examples {
-  float: right;
+  float:;
 }
 
 #output {
+  clear: both;
   position: relative;
 }
 #errors {

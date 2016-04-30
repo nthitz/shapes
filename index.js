@@ -123,7 +123,11 @@ function reset() {
 
 
       let hitsNone = true
-      for (let i = 0; i < shapes.length; i++) {
+      let searchBounds = [0, shapes.length]
+      if (typeof program.condition.last !== 'undefined') {
+        let searchStart = Math.max(0, shapes.length - program.condition.last)
+      }
+      for (let i = searchBounds[0]; i < searchBounds[1]; i++) {
         let testShape = shapes[i]
         if (testFunction(shape, testShape)) {
           hitsNone = false

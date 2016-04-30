@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import lineSegmentsIntersect from 'line-segments-intersect'
 import polygonsIntersection from 'polygons-intersect'
+import deepEqual from 'deep-equal'
 
 import style from './styles.css'
 import shapesParser from './shapes.js'
@@ -14,6 +15,7 @@ let exampleDropdown = document.getElementById('examples')
 let output = document.getElementById('output')
 let ctx = output.getContext('2d')
 
+let program = null
 let shapes = []
 let color = 'white'
 
@@ -47,10 +49,23 @@ function setExample() {
   reset()
 }
 
+function compile(code) {
+  let newProgram = shapesParser.parse(code)
+  if (deepEqual(newProgram, program)) {
+    return false
+  }
+  program = newProgram
+  return true
+}
+
 function reset() {
-  cancelAnimationFrame(rafId)
   let code = input.value
-  let program = shapesParser.parse(code)
+  let updated = compile(code)
+  if (!updated) {
+    return
+  }
+
+  cancelAnimationFrame(rafId)
   console.log(program)
   shapes.length = 0
   window.shapes = shapes
@@ -60,14 +75,14 @@ function reset() {
   let halfSize = program.size / 2
   let twoPi = Math.PI * 2
 
-  program.constants = {}
+  let programConstants = {}
   if (program && program.angle &&
     program.angle.influence &&
     program.angle.influence === 'flowField'
   ) {
-    program.constants.flowField = {
-      x: Math.random() * 0.01 + 0.001,
-      y: Math.random() * 0.01 + 0.001
+    programConstants.flowField = {
+      x: Math.random() * 0.02 - 0.01,
+      y: Math.random() * 0.02 - 0.01
     }
   }
   function draw() {
@@ -93,8 +108,8 @@ function reset() {
             angle = Math.atan2(y - dim / 2, x - dim / 2)
             addRandomJitter()
           } else if (program.angle.influence === 'flowField') {
-            angle = Math.cos(x * program.constants.flowField.x)
-              + Math.cos(y * program.constants.flowField.y)
+            angle = Math.cos(x * programConstants.flowField.x)
+              + Math.cos(y * programConstants.flowField.y)
             addRandomJitter()
 
           }

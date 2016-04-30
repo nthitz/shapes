@@ -76,7 +76,7 @@ function reset() {
       ctx.lineTo(newShape[1][0], newShape[1][1])
       ctx.stroke()
     } else if (program.shape.type === 'circle') {
-      ctx.arc(0, 0, program.size, 0, twoPi, true)
+      ctx.arc(x, y, halfSize, 0, twoPi, true)
       ctx.fill()
     }
     ctx.restore()
@@ -98,7 +98,9 @@ function reset() {
           [x + Math.cos(angle) * halfSize, y + Math.sin(angle) * halfSize]
         ]
       } else if (program.shape.type === 'polygon') {
-        shape = makePolygon(x, y, halfSize * Math.sqrt(2), angle, 4)
+        shape = makePolygon(x, y, halfSize * Math.sqrt(2), angle, program.shape.n)
+      } else if (program.shape.type === 'circle') {
+        shape = { x: x, y: y, r: halfSize }
       }
 
       if (! program.condition) return addShapeAndReturn()
@@ -115,6 +117,8 @@ function reset() {
         testFunction = lineSegmentsIntersect
       } else if (program.shape.type === 'polygon') {
         testFunction = polygonsIntersect
+      } else if (program.shape.type === 'circle') {
+        testFunction = circlesIntersecting
       }
 
 
@@ -184,4 +188,11 @@ function makePolygon(cx, cy, radius, theta, sides, format='object') {
     points.push(format === 'object' ? {x: x, y: y} : [x, y])
   }
   return points
+}
+
+function circlesIntersecting(circle1, circle2) {
+  return (
+    Math.pow(circle2.x - circle1.x, 2) +
+    Math.pow(circle2.y - circle1.y, 2)
+  ) < Math.pow(circle2.r + circle1.r, 2)
 }

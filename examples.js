@@ -1,9 +1,9 @@
 module.exports = [
   '30px square random angle only draw if intersecting',
-  '4px circle',
-  '20px line',
+  '40px circle only draw if intersecting',
+  '20px 3gon',
   '30px square',
-  '20px line angle',
+  '20px triangle random angle only draw if not intersecting',
   '20px square random angle',
   '20px line random angle',
   '20px line angle influenced by orientation to center ',

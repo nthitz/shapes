@@ -22,7 +22,7 @@ let program = null
 let compileError = null
 
 let shapes = []
-let color = 'white'
+let color = '#e8e8e8'
 
 
 init()
